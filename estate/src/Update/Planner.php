@@ -176,8 +176,10 @@ final class Planner
             if (Version::compare($eco, $c['version'], $dep['version']) <= 0 || Version::isPrerelease($eco, $c['version'])) {
                 continue;
             }
-            if (new \DateTimeImmutable($c['released']) > $now || !empty($c['yanked'])
-                || in_array($c['version'], $dep['skip'] ?? [], true)) {
+            if (
+                new \DateTimeImmutable($c['released']) > $now || !empty($c['yanked'])
+                || in_array($c['version'], $dep['skip'] ?? [], true)
+            ) {
                 continue; // not out yet, withdrawn by its maintainers, or already failed for this app
             }
             foreach ($advisories as $a) {

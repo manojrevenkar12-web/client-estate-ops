@@ -130,8 +130,11 @@ final class PlannerTest extends TestCase
         $app['dependencies'][0]['available'][] = ['version' => '7.8.2', 'released' => '2026-03-09T00:00:00Z'];
         $jobs = (new Planner($this->policy()))->plan($app, [], $tuesday);
         $routine = $this->lane($jobs, 'routine');
-        $this->assertNotContains('guzzlehttp/guzzle', array_column($routine['changes'] ?? [], 'name'),
-            '7.8.2 is a day old: wait for it rather than take 7.8.1');
+        $this->assertNotContains(
+            'guzzlehttp/guzzle',
+            array_column($routine['changes'] ?? [], 'name'),
+            '7.8.2 is a day old: wait for it rather than take 7.8.1'
+        );
         $app = $this->app();
         $app['dependencies'][0]['skip'] = ['7.8.1'];
         $to = array_column($this->lane((new Planner($this->policy()))->plan($app, [], $tuesday), 'routine')['changes'], 'to', 'name');

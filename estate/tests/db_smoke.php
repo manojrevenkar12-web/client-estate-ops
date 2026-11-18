@@ -17,8 +17,13 @@ $store->migrate();
 $store->reset();
 $snapshot = json_decode((string) file_get_contents($file), true, 512, JSON_THROW_ON_ERROR);
 $store->import($snapshot);
-$api = new Api($store, Policy::load(dirname(__DIR__, 2) . '/config/estate.json'), 't', null,
-    fn () => new DateTimeImmutable($snapshot['as_of']));
+$api = new Api(
+    $store,
+    Policy::load(dirname(__DIR__, 2) . '/config/estate.json'),
+    't',
+    null,
+    fn () => new DateTimeImmutable($snapshot['as_of'])
+);
 [$code, $body] = $api->handle('GET', '/api/estate');
 $apps = array_sum(array_map(fn ($c) => count($c['apps']), $body['clients']));
 if ($code !== 200 || $apps !== count($snapshot['apps'])) {

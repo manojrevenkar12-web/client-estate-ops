@@ -53,8 +53,10 @@ final class Auditor
                 $finding = ['schedule', $eur * (float) $c['schedule_saving_share'], 'idle staging: stop nights and weekends'];
             } elseif ($idle) {
                 $finding = ['delete', $eur, 'no traffic and no CPU for 14 days, not seasonal'];
-            } elseif ($r['kind'] === 'vm' && (float) ($r['cpu_p95'] ?? 100) < (float) $c['oversized_cpu_p95']
-                && (float) ($r['cpu_p99'] ?? 100) < (float) $c['downsize_max_cpu_p99']) { // spiky VMs keep their size
+            } elseif (
+                $r['kind'] === 'vm' && (float) ($r['cpu_p95'] ?? 100) < (float) $c['oversized_cpu_p95']
+                && (float) ($r['cpu_p99'] ?? 100) < (float) $c['downsize_max_cpu_p99']
+            ) { // spiky VMs keep their size
                 $finding = ['downsize', $eur * (float) $c['downsize_saving_share'], sprintf(
                     'p95 CPU %.0f%%: one size down',
                     (float) $r['cpu_p95']
