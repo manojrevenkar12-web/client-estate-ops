@@ -168,7 +168,8 @@ final class Api
     /** @return array{0:int, 1:array<mixed>} */
     private function ingest(string $body): array
     {
-        $in = $this->json($body);
+        /** @var array<mixed> $in */
+        $in = json_decode($body === '' ? '{}' : $body, true, 64, JSON_THROW_ON_ERROR);
         $list = array_is_list($in) ? $in : [$in];
         foreach ($list as $osv) {
             foreach (['id', 'ecosystem', 'package', 'ranges'] as $k) {

@@ -36,7 +36,11 @@ final readonly class Range
         return $affected;
     }
 
-    /** The fixed versions, oldest first. @return list<string> */
+    /**
+     * The fixed versions, oldest first.
+     *
+     * @return list<string>
+     */
     public function fixes(): array
     {
         $out = [];

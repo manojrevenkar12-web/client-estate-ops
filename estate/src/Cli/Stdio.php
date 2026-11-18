@@ -24,7 +24,10 @@ final class Stdio
         $this->policy = $base->design($design);
     }
 
-    /** @param resource $in @param resource $out */
+    /**
+     * @param resource $in
+     * @param resource $out
+     */
     public function run($in, $out): void
     {
         while (($line = fgets($in)) !== false) {

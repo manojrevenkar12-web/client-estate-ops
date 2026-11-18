@@ -18,7 +18,7 @@ final class Semver
         }
         $release = array_map('intval', explode('.', $m[1]));
         $pre = [];
-        if (isset($m[2]) && $m[2] !== '') {
+        if (isset($m[2])) {
             foreach (preg_split('/[.-]/', $m[2]) ?: [] as $id) {
                 $pre[] = ctype_digit($id) ? (int) $id : strtolower($id);
             }

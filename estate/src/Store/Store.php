@@ -16,7 +16,7 @@ final class Store
     private const SCHEMA = [
         'CREATE TABLE IF NOT EXISTS clients (id VARCHAR(64) PRIMARY KEY, name VARCHAR(200) NOT NULL)',
         'CREATE TABLE IF NOT EXISTS apps (id VARCHAR(64) PRIMARY KEY, client_id VARCHAR(64) NOT NULL, name VARCHAR(200) NOT NULL,
-            stack VARCHAR(32) NOT NULL, provider VARCHAR(16) NOT NULL, url VARCHAR(300) NOT NULL, freeze TEXT NOT NULL)',
+            stack VARCHAR(32) NOT NULL, provider VARCHAR(16) NOT NULL, url VARCHAR(300) NOT NULL, freezes TEXT NOT NULL)',
         'CREATE TABLE IF NOT EXISTS dependencies (app_id VARCHAR(64) NOT NULL, ecosystem VARCHAR(16) NOT NULL,
             name VARCHAR(200) NOT NULL, version VARCHAR(64) NOT NULL, PRIMARY KEY (app_id, ecosystem, name))',
         'CREATE TABLE IF NOT EXISTS advisories (id VARCHAR(64) PRIMARY KEY, ecosystem VARCHAR(16) NOT NULL,
@@ -70,7 +70,7 @@ final class Store
             foreach ($s['apps'] ?? [] as $a) {
                 $this->upsert('apps', ['id' => $a['id'], 'client_id' => $a['client'], 'name' => $a['name'],
                     'stack' => $a['stack'], 'provider' => $a['provider'], 'url' => $a['url'] ?? '',
-                    'freeze' => json_encode($a['freeze'] ?? [], JSON_THROW_ON_ERROR)], ['id']);
+                    'freezes' => json_encode($a['freeze'] ?? [], JSON_THROW_ON_ERROR)], ['id']);
                 foreach ($a['dependencies'] ?? [] as $d) {
                     $this->upsert('dependencies', ['app_id' => $a['id'], 'ecosystem' => $d['ecosystem'],
                         'name' => $d['name'], 'version' => $d['version']], ['app_id', 'ecosystem', 'name']);
@@ -135,14 +135,14 @@ final class Store
         $rows = $client === null
             ? $this->all('SELECT * FROM apps ORDER BY id')
             : $this->all('SELECT * FROM apps WHERE client_id = ? ORDER BY id', [$client]);
-        return array_map(fn ($r) => $r + ['freeze_windows' => json_decode($r['freeze'], true)], $rows);
+        return array_map(fn ($r) => $r + ['freeze_windows' => json_decode($r['freezes'], true)], $rows);
     }
 
     /** @return array<string,mixed>|null */
     public function app(string $id): ?array
     {
         $rows = $this->all('SELECT * FROM apps WHERE id = ?', [$id]);
-        return $rows === [] ? null : $rows[0] + ['freeze_windows' => json_decode($rows[0]['freeze'], true)];
+        return $rows === [] ? null : $rows[0] + ['freeze_windows' => json_decode($rows[0]['freezes'], true)];
     }
 
     /** @return list<array{ecosystem:string, name:string, version:string}> */

@@ -36,7 +36,7 @@ final class Pep440
             $post = (int) $m[6];
         }
         $dev = isset($m[7]) && preg_match('/dev/', $v) ? (int) $m[7] : null;
-        return ['epoch' => (int) ($m[1] ?? 0), 'release' => $release, 'pre' => $pre, 'post' => $post, 'dev' => $dev];
+        return ['epoch' => (int) $m[1], 'release' => $release, 'pre' => $pre, 'post' => $post, 'dev' => $dev];
     }
 
     public static function compare(string $a, string $b): int
