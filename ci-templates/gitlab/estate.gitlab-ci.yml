@@ -1,0 +1,122 @@
+# Shared pipeline for a delivered client app. Include it from the client project:
+#
+#   include:
+#     - project: agency/client-estate-ops
+#       file: ci-templates/gitlab/estate.gitlab-ci.yml
+#   variables:
+#     ESTATE_STACK: laravel        # laravel | symfony | django | fastapi | nextjs
+#     ESTATE_APP: brauhaus-kessler-shop
+#
+# Every merge request runs the client's tests and an infrastructure plan; the default branch builds an image,
+# deploys a canary, asks the estate platform for a verdict and rolls out or back.
+
+stages: [test, build, plan, canary, rollout]
+
+variables:
+  ESTATE_URL: https://estate.agency.example
+  IMAGE: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA
+
+.php:
+  image: php:8.3-cli
+  before_script:
+    - apt-get update -qq && apt-get install -y -qq git unzip > /dev/null
+    - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+    - composer install --no-interaction --no-progress --prefer-dist
+  rules:
+    - if: $ESTATE_STACK == "laravel" || $ESTATE_STACK == "symfony"
+
+.python:
+  image: python:3.12-slim
+  before_script:
+    - pip install -q -r requirements.txt
+  rules:
+    - if: $ESTATE_STACK == "django" || $ESTATE_STACK == "fastapi"
+
+.node:
+  image: node:22-slim
+  before_script:
+    - npm ci --no-audit --no-fund
+  rules:
+    - if: $ESTATE_STACK == "nextjs"
+
+test:php:
+  extends: .php
+  stage: test
+  script:
+    - composer audit --locked
+    - vendor/bin/phpunit --log-junit junit.xml
+  artifacts:
+    reports:
+      junit: junit.xml
+
+test:python:
+  extends: .python
+  stage: test
+  script:
+    - pip install -q pip-audit pytest
+    - pip-audit -r requirements.txt
+    - pytest --junitxml=junit.xml
+  artifacts:
+    reports:
+      junit: junit.xml
+
+test:node:
+  extends: .node
+  stage: test
+  script:
+    - npm audit --omit=dev --audit-level=high
+    - npm test -- --reporter=junit --outputFile=junit.xml
+  artifacts:
+    reports:
+      junit: junit.xml
+
+build:
+  stage: build
+  image: docker:27
+  services: [docker:27-dind]
+  script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
+    - docker build --pull -t "$IMAGE" .
+    - docker push "$IMAGE"
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
+terraform:plan:
+  stage: plan
+  image: hashicorp/terraform:1.9
+  script:
+    - cd infra
+    - terraform init -input=false
+    - terraform plan -input=false -out=plan.tfplan
+  artifacts:
+    paths: [infra/plan.tfplan]
+  rules:
+    - exists: [infra/main.tf]
+
+canary:
+  stage: canary
+  image: alpine:3.20
+  before_script:
+    - apk add --no-cache curl jq
+  script:
+    - ./deploy/canary.sh "$IMAGE" 10          # 10% of traffic to the new image
+    - sleep 1800
+    - ./deploy/metrics.sh > counts.json       # {"baseline":{requests,errors},"canary":{requests,errors}}
+    - >
+      curl -fsS -X POST "$ESTATE_URL/api/canary/verdict"
+      -H "Authorization: Bearer $ESTATE_TOKEN" -H "Content-Type: application/json"
+      --data @counts.json | tee verdict.json
+    - jq -e '.verdict == "promote"' verdict.json || (./deploy/rollback.sh && exit 1)
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
+rollout:
+  stage: rollout
+  image: alpine:3.20
+  script:
+    - ./deploy/rollout.sh "$IMAGE"
+  environment:
+    name: production
+    url: $ESTATE_APP_URL
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH

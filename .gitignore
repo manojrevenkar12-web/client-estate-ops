@@ -1,0 +1,11 @@
+estate/vendor/
+estate/composer.lock
+var/*.sqlite
+web/node_modules/
+web/dist/
+web/*.tsbuildinfo
+__pycache__/
+*.egg-info/
+.pytest_cache/
+.terraform/
+.terraform.lock.hcl

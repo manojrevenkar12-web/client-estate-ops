@@ -1,0 +1,66 @@
+#cloud-config
+hostname: ${hostname}
+package_update: true
+package_upgrade: true
+packages:
+  - unattended-upgrades
+  - apt-listchanges
+  - fail2ban
+  - nftables
+  - prometheus-node-exporter
+  - nginx
+%{ if php_version != null ~}
+  - php${php_version}-fpm
+  - php${php_version}-mysql
+  - php${php_version}-pgsql
+  - php${php_version}-mbstring
+  - php${php_version}-xml
+%{ endif ~}
+users:
+  - name: deploy
+    groups: [www-data]
+    shell: /bin/bash
+    sudo: "ALL=(ALL) NOPASSWD: /usr/bin/systemctl reload nginx, /usr/bin/systemctl reload php*-fpm"
+    ssh_authorized_keys:
+%{ for key in admin_keys ~}
+      - ${key}
+%{ endfor ~}
+write_files:
+  - path: /etc/apt/apt.conf.d/52unattended-upgrades-estate
+    content: |
+      Unattended-Upgrade::Origins-Pattern { "origin=Debian,codename=$${distro_codename},label=Debian-Security"; };
+      Unattended-Upgrade::Automatic-Reboot "true";
+      Unattended-Upgrade::Automatic-Reboot-Time "04:30";
+      Unattended-Upgrade::Remove-Unused-Dependencies "true";
+  - path: /etc/apt/apt.conf.d/20auto-upgrades
+    content: |
+      APT::Periodic::Update-Package-Lists "1";
+      APT::Periodic::Unattended-Upgrade "1";
+  - path: /etc/ssh/sshd_config.d/10-estate.conf
+    content: |
+      PasswordAuthentication no
+      KbdInteractiveAuthentication no
+      PermitRootLogin no
+      AllowUsers deploy admin
+  - path: /etc/nftables.conf
+    content: |
+      flush ruleset
+      table inet filter {
+        chain input {
+          type filter hook input priority 0; policy drop;
+          ct state established,related accept
+          iif lo accept
+          tcp dport { 22, 80, 443 } accept
+          ip saddr 10.0.0.0/8 tcp dport 9100 accept
+          icmp type echo-request accept
+        }
+      }
+  - path: /etc/fail2ban/jail.d/sshd.local
+    content: |
+      [sshd]
+      enabled = true
+      maxretry = 5
+      bantime = 1h
+runcmd:
+  - systemctl enable --now nftables fail2ban prometheus-node-exporter unattended-upgrades
+  - systemctl restart ssh

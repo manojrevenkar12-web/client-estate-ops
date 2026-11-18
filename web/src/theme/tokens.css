@@ -1,0 +1,52 @@
+/* Design tokens. Every colour, size and duration in the console comes from here.
+   An ops desk for a client estate: a cool graphite paper, ink, one action blue, and severity colours that are
+   reserved for advisories so that red always means a security flaw in production. */
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Instrument Sans", system-ui, sans-serif;
+
+  --color-paper: #eef1f4;
+  --color-sheet: #ffffff;
+  --color-ink: #14202b;
+  --color-muted: #5a6675;
+  --color-rule: #d5dbe2;
+  --color-action: #2049a3;
+  --color-ok: #1f7a55;
+  --color-ok-soft: #dcefe6;
+  --color-critical: #b4232f;
+  --color-critical-soft: #f7dfe1;
+  --color-high: #b75d0b;
+  --color-high-soft: #f8e8d6;
+  --color-medium: #7a6a1e;
+  --color-medium-soft: #efebd5;
+  --color-low: #5d6d7e;
+  --color-low-soft: #e3e8ed;
+
+  --text-xs: 0.8125rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.75rem;
+  --text-2xl: 2.25rem;
+
+  --radius-field: 0.25rem;
+  --radius-panel: 0.5rem;
+  --width-page: 84rem;
+}
+
+:root {
+  font-family: var(--font-sans);
+  color: var(--color-ink);
+  background: var(--color-paper);
+  font-feature-settings: "tnum" 1;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-action);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition-duration: 0ms !important; animation-duration: 0ms !important; }
+}

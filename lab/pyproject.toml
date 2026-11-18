@@ -1,0 +1,18 @@
+[project]
+name = "estate-lab"
+version = "1.0.0"
+description = "Simulated agency estate and the design study for client-estate-ops"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.optional-dependencies]
+test = ["pytest>=8"]
+
+[tool.setuptools]
+packages = ["estate_lab"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 120

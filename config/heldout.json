@@ -1,0 +1,12 @@
+{
+  "_doc": "The held-out estate: run once (docs/heldout.md). Other clients, apps and luck; more Python and Node; a worse month of advisories; flakier probes; briefs written in phrasings the reader never saw.",
+  "seed": 907,
+  "stacks": {"laravel": 0.22, "symfony": 0.08, "django": 0.25, "fastapi": 0.15, "nextjs": 0.3},
+  "advisories": {"per_week": 4.5, "severity": {"critical": 0.14, "high": 0.32, "medium": 0.36, "low": 0.18},
+                 "major_only_share": 0.08, "no_fix_yet_share": 0.05, "affects_back_releases": [2, 12]},
+  "probes": {"regions": ["eu-central", "us-east", "ap-south"], "blips_per_app_week": 5, "two_region_blip_share": 0.08,
+             "outages_per_app_month": 0.7, "outage_minutes": [3, 120]},
+  "estimates": {"past_projects": 320, "briefs": 80, "day_rate_eur": 920, "phrasing": "heldout",
+                "person_optimism": 0.78, "person_noise": 0.28},
+  "phrasing": "heldout"
+}

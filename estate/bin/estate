@@ -1,0 +1,44 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+use Estate\Cli\Stdio;
+use Estate\Policy;
+use Estate\Store\Store;
+
+require dirname(__DIR__) . '/vendor/autoload.php';
+
+$root = dirname(__DIR__, 2);
+$args = array_slice($argv, 1);
+$cmd = array_shift($args) ?? 'help';
+$opt = static function (string $name, ?string $default = null) use ($args): ?string {
+    foreach ($args as $a) {
+        if (str_starts_with($a, "--{$name}=")) {
+            return substr($a, strlen($name) + 3);
+        }
+    }
+    return $default;
+};
+$policy = Policy::load($opt('config', $root . '/config/estate.json'));
+$dsn = $opt('dsn', getenv('ESTATE_DSN') ?: 'sqlite:' . $root . '/var/estate.sqlite');
+
+switch ($cmd) {
+    case 'serve-stdio':
+        (new Stdio($policy, (string) $opt('design', 'gated')))->run(STDIN, STDOUT);
+        break;
+    case 'migrate':
+        Store::open((string) $dsn)->migrate();
+        fwrite(STDOUT, "migrated {$dsn}\n");
+        break;
+    case 'import':
+        $file = $args[0] ?? throw new InvalidArgumentException('usage: estate import <snapshot.json> [--dsn=...]');
+        $store = Store::open((string) $dsn);
+        $store->migrate();
+        $store->reset();
+        $store->import(json_decode((string) file_get_contents($file), true, 512, JSON_THROW_ON_ERROR));
+        fwrite(STDOUT, "imported {$file} into {$dsn}\n");
+        break;
+    default:
+        fwrite(STDOUT, "usage: estate serve-stdio [--design=gated] | migrate | import <snapshot.json> [--dsn=...]\n");
+}

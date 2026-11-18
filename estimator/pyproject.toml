@@ -1,0 +1,16 @@
+[project]
+name = "estate-estimator"
+version = "1.0.0"
+description = "Drafts a technical concept and an estimate from a client brief; code checks the draft against past delivery; a person approves"
+requires-python = ">=3.11"
+dependencies = ["fastapi>=0.110", "pydantic>=2.6"]
+
+[project.optional-dependencies]
+test = ["pytest>=8", "httpx>=0.27"]
+model = ["anthropic>=0.40"]
+
+[tool.setuptools]
+packages = ["estimator"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

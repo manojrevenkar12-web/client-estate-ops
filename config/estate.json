@@ -1,0 +1,113 @@
+{
+  "_doc": "Settings of the estate platform. The simulated world never reads this file. Designs are overlays on the base settings.",
+  "updates": {
+    "fast_lane_severities": [
+      "critical",
+      "high"
+    ],
+    "fast_lane_in_freeze": [
+      "critical"
+    ],
+    "routine_weekday": 2,
+    "majors": "review",
+    "max_changes_per_job": 8,
+    "review_budget_per_week": 8,
+    "min_release_age_days": 5,
+    "canary": true
+  },
+  "canary": {
+    "traffic_share": 0.1,
+    "minutes": 30,
+    "min_requests": 300,
+    "alpha": 0.002,
+    "min_extra_error_rate": 0.004,
+    "max_extensions": 2,
+    "review_minutes": 180
+  },
+  "watch": {
+    "hours": 6
+  },
+  "pager": {
+    "mode": "corroborated",
+    "regions_required": 2,
+    "consecutive_rounds": 2,
+    "deploy_window_minutes": 60
+  },
+  "cost": {
+    "mode": "guarded",
+    "idle_cpu_p95": 3.0,
+    "idle_days": 14,
+    "oversized_cpu_p95": 20.0,
+    "snapshot_age_days": 90,
+    "seasonal_ratio": 5.0,
+    "schedule_saving_share": 0.65,
+    "downsize_saving_share": 0.5,
+    "downsize_max_cpu_p99": 60.0
+  },
+  "designs": {
+    "auto_merge": {
+      "updates": {
+        "review_budget_per_week": 100000,
+        "fast_lane_severities": [
+          "critical",
+          "high",
+          "medium",
+          "low"
+        ],
+        "fast_lane_in_freeze": [
+          "critical",
+          "high",
+          "medium",
+          "low"
+        ],
+        "routine_weekday": 0,
+        "majors": "merge",
+        "min_release_age_days": 0,
+        "canary": false,
+        "respect_freeze": false
+      },
+      "pager": {
+        "mode": "any"
+      },
+      "watch": {
+        "hours": 0
+      }
+    },
+    "gated": {},
+    "gated_no_canary": {
+      "updates": {
+        "canary": false
+      },
+      "watch": {
+        "hours": 0
+      }
+    },
+    "gated_no_watch": {
+      "watch": {
+        "hours": 0
+      }
+    },
+    "gated_no_fast_lane": {
+      "updates": {
+        "fast_lane_severities": []
+      }
+    },
+    "gated_naive_pager": {
+      "pager": {
+        "mode": "any"
+      }
+    },
+    "naive_cost": {
+      "cost": {
+        "mode": "naive"
+      }
+    }
+  },
+  "gate": {
+    "max_critical_exposure_days_p90": 3,
+    "max_broken_deploy_minutes_per_app_month": 30,
+    "max_noise_page_share": 0.2,
+    "max_wrong_cost_deletions": 0,
+    "max_estimate_underruns_share": 0.15
+  }
+}

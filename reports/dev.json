@@ -1,0 +1,600 @@
+{
+  "world": "dev",
+  "seed": 61,
+  "days": 182,
+  "clients": 22,
+  "apps": 60,
+  "stacks": {
+    "django": 14,
+    "fastapi": 3,
+    "laravel": 20,
+    "nextjs": 20,
+    "symfony": 3
+  },
+  "dependencies": 1544,
+  "packages": 120,
+  "releases": 4347,
+  "regressions": 118,
+  "advisories": 85,
+  "advisory_severity": {
+    "critical": 4,
+    "high": 29,
+    "low": 21,
+    "medium": 31
+  },
+  "designs": [
+    {
+      "design": "today",
+      "deploys": 343,
+      "changes_applied": 4998,
+      "ci_rejections": 0,
+      "review_rejections": 0,
+      "canary_runs": 0,
+      "canary_true_rollbacks": 0,
+      "canary_false_rollbacks": 0,
+      "canary_missed": 0,
+      "broken_deploys": 0,
+      "downtime_minutes": 0.0,
+      "degraded_minutes": 0.0,
+      "pages": 4919,
+      "noise_pages": 4772,
+      "outage_pages": 147,
+      "deploy_rollbacks_auto": 0,
+      "outages": 148,
+      "outages_missed": 0,
+      "person_hours": {
+        "critical patches": 11.0,
+        "incidents": 110.2,
+        "pages": 1475.7,
+        "patch days": 996.7
+      },
+      "held_for_freeze": 0,
+      "watch_rollbacks": 0,
+      "watch_false_rollbacks": 0,
+      "exposure": {
+        "critical": {
+          "pairs": 36,
+          "app_days": 1634.6,
+          "median_days": 6.93,
+          "p90_days": 172.07,
+          "open_at_end": 17
+        },
+        "high": {
+          "pairs": 286,
+          "app_days": 13876.0,
+          "median_days": 17.56,
+          "p90_days": 180.58,
+          "open_at_end": 114
+        },
+        "medium": {
+          "pairs": 342,
+          "app_days": 18049.5,
+          "median_days": 25.4,
+          "p90_days": 162.04,
+          "open_at_end": 154
+        },
+        "low": {
+          "pairs": 208,
+          "app_days": 2690.4,
+          "median_days": 8.7,
+          "p90_days": 22.82,
+          "open_at_end": 83
+        }
+      },
+      "freshness": 0.559,
+      "majors_behind": 808,
+      "deploys_in_freeze": 0,
+      "product_calls": 0,
+      "review_backlog_avg": 0,
+      "person_hours_total": 2593.6,
+      "broken_minutes_per_app_month": 0.0,
+      "noise_page_share": 0.97,
+      "outage_detect_minutes_median": 0.0,
+      "pages_per_week": 189.2
+    },
+    {
+      "design": "auto_merge",
+      "deploys": 9456,
+      "changes_applied": 18888,
+      "ci_rejections": 272,
+      "review_rejections": 0,
+      "canary_runs": 0,
+      "canary_true_rollbacks": 0,
+      "canary_false_rollbacks": 0,
+      "canary_missed": 0,
+      "broken_deploys": 523,
+      "downtime_minutes": 4676.7,
+      "degraded_minutes": 585212.4,
+      "pages": 5076,
+      "noise_pages": 4772,
+      "outage_pages": 147,
+      "deploy_rollbacks_auto": 0,
+      "outages": 148,
+      "outages_missed": 0,
+      "person_hours": {
+        "CI failures": 136.0,
+        "incidents": 502.5,
+        "pages": 1522.8
+      },
+      "held_for_freeze": 0,
+      "watch_rollbacks": 0,
+      "watch_false_rollbacks": 0,
+      "exposure": {
+        "critical": {
+          "pairs": 37,
+          "app_days": 22.9,
+          "median_days": 0.49,
+          "p90_days": 0.93,
+          "open_at_end": 0
+        },
+        "high": {
+          "pairs": 369,
+          "app_days": 265.5,
+          "median_days": 0.48,
+          "p90_days": 0.89,
+          "open_at_end": 0
+        },
+        "medium": {
+          "pairs": 415,
+          "app_days": 1042.8,
+          "median_days": 0.74,
+          "p90_days": 1.01,
+          "open_at_end": 2
+        },
+        "low": {
+          "pairs": 263,
+          "app_days": 451.7,
+          "median_days": 0.7,
+          "p90_days": 0.97,
+          "open_at_end": 6
+        }
+      },
+      "freshness": 0.973,
+      "majors_behind": 28,
+      "deploys_in_freeze": 814,
+      "product_calls": 4291,
+      "review_backlog_avg": 0,
+      "person_hours_total": 2161.3,
+      "broken_minutes_per_app_month": 1642.18,
+      "noise_page_share": 0.94,
+      "outage_detect_minutes_median": 0.0,
+      "pages_per_week": 195.2
+    },
+    {
+      "design": "gated",
+      "deploys": 2143,
+      "changes_applied": 7895,
+      "ci_rejections": 13,
+      "review_rejections": 107,
+      "canary_runs": 2180,
+      "canary_true_rollbacks": 29,
+      "canary_false_rollbacks": 8,
+      "canary_missed": 4,
+      "broken_deploys": 4,
+      "downtime_minutes": 0.0,
+      "degraded_minutes": 1377.3,
+      "pages": 148,
+      "noise_pages": 0,
+      "outage_pages": 148,
+      "deploy_rollbacks_auto": 0,
+      "outages": 148,
+      "outages_missed": 0,
+      "person_hours": {
+        "CI failures": 6.5,
+        "canary rollbacks": 49.0,
+        "incidents": 114.0,
+        "major reviews": 1341.0,
+        "pages": 44.4
+      },
+      "held_for_freeze": 564,
+      "watch_rollbacks": 4,
+      "watch_false_rollbacks": 12,
+      "exposure": {
+        "critical": {
+          "pairs": 30,
+          "app_days": 17.2,
+          "median_days": 0.49,
+          "p90_days": 0.93,
+          "open_at_end": 0
+        },
+        "high": {
+          "pairs": 309,
+          "app_days": 547.7,
+          "median_days": 0.51,
+          "p90_days": 1.09,
+          "open_at_end": 3
+        },
+        "medium": {
+          "pairs": 352,
+          "app_days": 2470.3,
+          "median_days": 4.4,
+          "p90_days": 15.42,
+          "open_at_end": 3
+        },
+        "low": {
+          "pairs": 227,
+          "app_days": 903.0,
+          "median_days": 3.72,
+          "p90_days": 5.67,
+          "open_at_end": 13
+        }
+      },
+      "freshness": 0.727,
+      "majors_behind": 570,
+      "deploys_in_freeze": 13,
+      "product_calls": 11501,
+      "review_backlog_avg": 299.4,
+      "person_hours_total": 1554.9,
+      "broken_minutes_per_app_month": 3.83,
+      "noise_page_share": 0.0,
+      "outage_detect_minutes_median": 1.0,
+      "pages_per_week": 5.7
+    },
+    {
+      "design": "gated_no_canary",
+      "deploys": 2169,
+      "changes_applied": 7912,
+      "ci_rejections": 13,
+      "review_rejections": 107,
+      "canary_runs": 0,
+      "canary_true_rollbacks": 0,
+      "canary_false_rollbacks": 0,
+      "canary_missed": 0,
+      "broken_deploys": 33,
+      "downtime_minutes": 20.0,
+      "degraded_minutes": 42918.2,
+      "pages": 148,
+      "noise_pages": 0,
+      "outage_pages": 148,
+      "deploy_rollbacks_auto": 4,
+      "outages": 148,
+      "outages_missed": 0,
+      "person_hours": {
+        "CI failures": 6.5,
+        "incidents": 134.2,
+        "major reviews": 1329.0,
+        "pages": 44.4
+      },
+      "held_for_freeze": 564,
+      "watch_rollbacks": 0,
+      "watch_false_rollbacks": 0,
+      "exposure": {
+        "critical": {
+          "pairs": 30,
+          "app_days": 17.2,
+          "median_days": 0.49,
+          "p90_days": 0.93,
+          "open_at_end": 0
+        },
+        "high": {
+          "pairs": 309,
+          "app_days": 542.6,
+          "median_days": 0.51,
+          "p90_days": 0.94,
+          "open_at_end": 2
+        },
+        "medium": {
+          "pairs": 352,
+          "app_days": 2440.4,
+          "median_days": 4.4,
+          "p90_days": 15.42,
+          "open_at_end": 3
+        },
+        "low": {
+          "pairs": 227,
+          "app_days": 896.3,
+          "median_days": 3.72,
+          "p90_days": 5.67,
+          "open_at_end": 13
+        }
+      },
+      "freshness": 0.729,
+      "majors_behind": 569,
+      "deploys_in_freeze": 15,
+      "product_calls": 4138,
+      "review_backlog_avg": 299.0,
+      "person_hours_total": 1514.1,
+      "broken_minutes_per_app_month": 119.53,
+      "noise_page_share": 0.0,
+      "outage_detect_minutes_median": 1.0,
+      "pages_per_week": 5.7
+    },
+    {
+      "design": "gated_no_watch",
+      "deploys": 2135,
+      "changes_applied": 7868,
+      "ci_rejections": 13,
+      "review_rejections": 107,
+      "canary_runs": 2172,
+      "canary_true_rollbacks": 29,
+      "canary_false_rollbacks": 8,
+      "canary_missed": 4,
+      "broken_deploys": 4,
+      "downtime_minutes": 0.0,
+      "degraded_minutes": 9361.9,
+      "pages": 148,
+      "noise_pages": 0,
+      "outage_pages": 148,
+      "deploy_rollbacks_auto": 0,
+      "outages": 148,
+      "outages_missed": 0,
+      "person_hours": {
+        "CI failures": 6.5,
+        "canary rollbacks": 37.0,
+        "incidents": 114.0,
+        "major reviews": 1329.0,
+        "pages": 44.4
+      },
+      "held_for_freeze": 564,
+      "watch_rollbacks": 0,
+      "watch_false_rollbacks": 0,
+      "exposure": {
+        "critical": {
+          "pairs": 30,
+          "app_days": 17.2,
+          "median_days": 0.49,
+          "p90_days": 0.93,
+          "open_at_end": 0
+        },
+        "high": {
+          "pairs": 309,
+          "app_days": 544.3,
+          "median_days": 0.51,
+          "p90_days": 0.94,
+          "open_at_end": 3
+        },
+        "medium": {
+          "pairs": 352,
+          "app_days": 2455.2,
+          "median_days": 4.4,
+          "p90_days": 15.42,
+          "open_at_end": 3
+        },
+        "low": {
+          "pairs": 227,
+          "app_days": 901.5,
+          "median_days": 3.72,
+          "p90_days": 5.67,
+          "open_at_end": 13
+        }
+      },
+      "freshness": 0.729,
+      "majors_behind": 570,
+      "deploys_in_freeze": 13,
+      "product_calls": 9337,
+      "review_backlog_avg": 299.4,
+      "person_hours_total": 1530.9,
+      "broken_minutes_per_app_month": 26.06,
+      "noise_page_share": 0.0,
+      "outage_detect_minutes_median": 1.0,
+      "pages_per_week": 5.7
+    },
+    {
+      "design": "gated_no_fast_lane",
+      "deploys": 1876,
+      "changes_applied": 7834,
+      "ci_rejections": 13,
+      "review_rejections": 102,
+      "canary_runs": 1913,
+      "canary_true_rollbacks": 30,
+      "canary_false_rollbacks": 7,
+      "canary_missed": 3,
+      "broken_deploys": 3,
+      "downtime_minutes": 0.0,
+      "degraded_minutes": 1014.3,
+      "pages": 148,
+      "noise_pages": 0,
+      "outage_pages": 148,
+      "deploy_rollbacks_auto": 0,
+      "outages": 148,
+      "outages_missed": 0,
+      "person_hours": {
+        "CI failures": 6.5,
+        "canary rollbacks": 48.0,
+        "incidents": 113.2,
+        "major reviews": 1281.0,
+        "pages": 44.4
+      },
+      "held_for_freeze": 656,
+      "watch_rollbacks": 3,
+      "watch_false_rollbacks": 11,
+      "exposure": {
+        "critical": {
+          "pairs": 30,
+          "app_days": 135.4,
+          "median_days": 5.49,
+          "p90_days": 5.93,
+          "open_at_end": 0
+        },
+        "high": {
+          "pairs": 306,
+          "app_days": 1322.7,
+          "median_days": 3.16,
+          "p90_days": 6.89,
+          "open_at_end": 28
+        },
+        "medium": {
+          "pairs": 352,
+          "app_days": 2514.0,
+          "median_days": 4.4,
+          "p90_days": 14.42,
+          "open_at_end": 3
+        },
+        "low": {
+          "pairs": 227,
+          "app_days": 903.0,
+          "median_days": 3.72,
+          "p90_days": 5.67,
+          "open_at_end": 13
+        }
+      },
+      "freshness": 0.721,
+      "majors_behind": 576,
+      "deploys_in_freeze": 12,
+      "product_calls": 10554,
+      "review_backlog_avg": 267.3,
+      "person_hours_total": 1493.1,
+      "broken_minutes_per_app_month": 2.82,
+      "noise_page_share": 0.0,
+      "outage_detect_minutes_median": 1.0,
+      "pages_per_week": 5.7
+    },
+    {
+      "design": "gated_naive_pager",
+      "deploys": 2143,
+      "changes_applied": 7895,
+      "ci_rejections": 13,
+      "review_rejections": 107,
+      "canary_runs": 2180,
+      "canary_true_rollbacks": 29,
+      "canary_false_rollbacks": 8,
+      "canary_missed": 4,
+      "broken_deploys": 4,
+      "downtime_minutes": 0.0,
+      "degraded_minutes": 1377.3,
+      "pages": 4919,
+      "noise_pages": 4772,
+      "outage_pages": 147,
+      "deploy_rollbacks_auto": 0,
+      "outages": 148,
+      "outages_missed": 0,
+      "person_hours": {
+        "CI failures": 6.5,
+        "canary rollbacks": 49.0,
+        "incidents": 113.2,
+        "major reviews": 1341.0,
+        "pages": 1475.7
+      },
+      "held_for_freeze": 564,
+      "watch_rollbacks": 4,
+      "watch_false_rollbacks": 12,
+      "exposure": {
+        "critical": {
+          "pairs": 30,
+          "app_days": 17.2,
+          "median_days": 0.49,
+          "p90_days": 0.93,
+          "open_at_end": 0
+        },
+        "high": {
+          "pairs": 309,
+          "app_days": 547.7,
+          "median_days": 0.51,
+          "p90_days": 1.09,
+          "open_at_end": 3
+        },
+        "medium": {
+          "pairs": 352,
+          "app_days": 2470.3,
+          "median_days": 4.4,
+          "p90_days": 15.42,
+          "open_at_end": 3
+        },
+        "low": {
+          "pairs": 227,
+          "app_days": 903.0,
+          "median_days": 3.72,
+          "p90_days": 5.67,
+          "open_at_end": 13
+        }
+      },
+      "freshness": 0.727,
+      "majors_behind": 570,
+      "deploys_in_freeze": 13,
+      "product_calls": 11501,
+      "review_backlog_avg": 299.4,
+      "person_hours_total": 2985.4,
+      "broken_minutes_per_app_month": 3.83,
+      "noise_page_share": 0.97,
+      "outage_detect_minutes_median": 0.0,
+      "pages_per_week": 189.2
+    }
+  ],
+  "proposed": "gated",
+  "cost": [
+    {
+      "method": "no audit (today)",
+      "resources": 177,
+      "monthly_eur_total": 58125.84,
+      "findings": 0,
+      "monthly_saving_eur": 0.0,
+      "possible_saving_eur": 21236.21,
+      "wrong_actions": 0,
+      "wrong_action_kinds": {},
+      "wrong_action_monthly_eur": 0.0
+    },
+    {
+      "method": "delete anything idle (common script)",
+      "resources": 177,
+      "monthly_eur_total": 58125.84,
+      "findings": 85,
+      "monthly_saving_eur": 10118.41,
+      "possible_saving_eur": 21236.21,
+      "wrong_actions": 54,
+      "wrong_action_kinds": {
+        "staging": 33,
+        "seasonal": 19,
+        "migrating": 2
+      },
+      "wrong_action_monthly_eur": 15820.77
+    },
+    {
+      "method": "guarded audit",
+      "resources": 177,
+      "monthly_eur_total": 58125.84,
+      "findings": 109,
+      "monthly_saving_eur": 20692.33,
+      "possible_saving_eur": 21236.21,
+      "wrong_actions": 0,
+      "wrong_action_kinds": {},
+      "wrong_action_monthly_eur": 0.0
+    }
+  ],
+  "estimates": [
+    {
+      "method": "person alone (today)",
+      "briefs": 80,
+      "median_abs_error": 0.248,
+      "overrun_share": 0.65,
+      "margin_lost_eur": 1657702,
+      "overquoted_share": 0.013,
+      "asked_client": 0,
+      "person_hours": 480.0,
+      "features_misread": null
+    },
+    {
+      "method": "agent without checks",
+      "briefs": 80,
+      "median_abs_error": 0.416,
+      "overrun_share": 0.713,
+      "margin_lost_eur": 4209920,
+      "overquoted_share": 0.013,
+      "asked_client": 0,
+      "person_hours": 120.0,
+      "features_misread": null
+    },
+    {
+      "method": "agent with reference class and checks",
+      "briefs": 80,
+      "median_abs_error": 0.196,
+      "overrun_share": 0.087,
+      "margin_lost_eur": 292940,
+      "overquoted_share": 0.188,
+      "asked_client": 20,
+      "person_hours": 130.0,
+      "features_misread": 10
+    }
+  ],
+  "gate": {
+    "design": "gated",
+    "pass": true,
+    "checks": [
+      "ok critical advisories: p90 0.9 days exposed after a fix existed (max 3)",
+      "ok broken-deploy minutes 3.8 per app-month (max 30)",
+      "ok noise pages 0% (max 20%)",
+      "ok cost findings that would remove something needed: 0 (max 0)",
+      "ok estimates overrun by more than 15%: 9% (max 15%)"
+    ]
+  },
+  "took_seconds": 173.6
+}

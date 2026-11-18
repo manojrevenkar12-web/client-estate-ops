@@ -1,0 +1,58 @@
+# The same pipeline for client projects hosted on GitHub: call it from the client repository with
+#   uses: agency/client-estate-ops/.github/workflows/client-app.yml@main
+name: client-app
+on:
+  workflow_call:
+    inputs:
+      stack:
+        type: string
+        required: true
+      image:
+        type: string
+        required: true
+    secrets:
+      ESTATE_TOKEN:
+        required: true
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - if: inputs.stack == 'laravel' || inputs.stack == 'symfony'
+        uses: shivammathur/setup-php@v2
+        with: { php-version: '8.3', tools: composer:v2 }
+      - if: inputs.stack == 'laravel' || inputs.stack == 'symfony'
+        run: composer install --no-interaction --prefer-dist && composer audit --locked && vendor/bin/phpunit
+      - if: inputs.stack == 'django' || inputs.stack == 'fastapi'
+        uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - if: inputs.stack == 'django' || inputs.stack == 'fastapi'
+        run: pip install -r requirements.txt pip-audit pytest && pip-audit -r requirements.txt && pytest
+      - if: inputs.stack == 'nextjs'
+        uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - if: inputs.stack == 'nextjs'
+        run: npm ci && npm audit --omit=dev --audit-level=high && npm test
+
+  canary:
+    needs: test
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+      - run: ./deploy/canary.sh "${{ inputs.image }}" 10 && sleep 1800 && ./deploy/metrics.sh > counts.json
+      - name: Ask the estate platform for a verdict
+        run: |
+          curl -fsS -X POST "$ESTATE_URL/api/canary/verdict" -H "Authorization: Bearer $ESTATE_TOKEN" \
+            -H "Content-Type: application/json" --data @counts.json | tee verdict.json
+          jq -e '.verdict == "promote"' verdict.json || (./deploy/rollback.sh && exit 1)
+        env:
+          ESTATE_URL: https://estate.agency.example
+          ESTATE_TOKEN: ${{ secrets.ESTATE_TOKEN }}
+      - run: ./deploy/rollout.sh "${{ inputs.image }}"
