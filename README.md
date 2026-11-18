@@ -90,7 +90,37 @@ Total spend €58,126 a month over 177 resources. Seasonal means a campaign site
 - ok cost findings that would remove something needed: 0 (max 0)
 - ok estimates overrun by more than 15%: 9% (max 15%)
 
+### Held-out estate (run once)
+
+Seed 907: other clients, apps and luck, more Python and Node, 118 advisories, more probe blips and outages, and client briefs in phrasings the reader was never written against. See docs/heldout.md.
+
+| | Dev today | Dev gated | Held-out today | Held-out gated |
+|---|---:|---:|---:|---:|
+| Critical p90 days exposed | 172.07 | 0.93 | 156.88 | 1.02 |
+| High app-days exposed | 13,876 | 548 | 13,212 | 717 |
+| Broken min / app-month | 0.0 | 3.8 | 0.0 | 3.0 |
+| Pages (noise share) | 4,919 (97%) | 148 (0%) | 8,003 (97%) | 239 (0%) |
+| Person-hours | 2,594 | 1,555 | 3,706 | 1,530 |
+| Estimates overrun > 15% | 65% | 9% | 69% | 88% |
+| Cost findings that would remove something needed | 0 | 0 | 0 | 0 |
+| Gate | | pass | | **fail** |
+
+- held-out FAIL estimates overrun by more than 15%: 88% (max 15%)
+
 <!-- dashboard:end -->
+
+### What the held-out estate showed
+
+The platform held up on an estate it was never tuned on, with 39% more advisories and 60% more probe noise: critical
+fixes reached production within a day at p90, high-severity exposure stayed at 5% of today's, broken-deploy minutes
+stayed at 3 per app-month, not one page was noise, and no cost finding would have removed something needed.
+
+The estimate agent did not. Its keyword reader was written against the dev phrasings and recognised almost nothing
+in the new ones ("roughly 18 different layouts", "a private area for dealers"): 218 features misread across 80
+briefs. Its checks did notice, and flagged all 80 briefs as needing answers from the client, so in use a person
+would have taken over; but the study scores the number each draft carried, and 88% of those overran. That fails the
+gate. The fix is in the reader (a model behind the same `Reader` interface, or rules written against real briefs),
+and it needs a new held-out set to be measured: these phrasings are spent.
 
 ## How it works
 
